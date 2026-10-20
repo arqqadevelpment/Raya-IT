@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {
 } from "lucide-react";
-import HeroNetwork from "@/components/HeroNetwork";
+import HeroVideo from "@/components/HeroVideo";
 import IndustriesSlider from "@/components/IndustriesSlider";
 import ServicesAccordion from "@/components/ServicesAccordion";
 import SolutionsGrid from "@/components/SolutionCards";
@@ -29,13 +29,9 @@ import { partnerLogos, type Partner } from "@/content/partners";
 export default function Home() {
   return (
     <>
-      {/* 01 — Hero: blue gradient field with a thin connected network that eases toward the cursor */}
-      <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-gradient-to-br from-electric via-navy to-deep pt-28 text-white">
-        <div aria-hidden="true" className="absolute inset-0 -z-10">
-          <HeroNetwork />
-          {/* Light tint keeps the text readable over the network. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-deep/20 via-transparent to-deep/30" />
-        </div>
+      {/* 01 — Hero: looping wave video background */}
+      <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-deep pt-28 text-white">
+        <HeroVideo />
 
         <Container className="relative flex flex-1 flex-col items-center justify-center py-24 text-center">
           <SplitHeading
