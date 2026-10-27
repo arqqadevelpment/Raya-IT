@@ -1,8 +1,7 @@
 "use client";
 
-// Auto-scrolling card row with previous / next arrows overlaid on the cards.
-// Scrolls itself slowly in a seamless loop, pauses on hover / focus / while the user steers it,
-// and also supports touch swipe and trackpad scrolling. Arrows move one card at a time.
+// Card row moved by the previous / next arrows overlaid on the cards (no automatic scrolling).
+// Arrows move one card at a time; touch swipe and trackpad scrolling also work. Loops at both ends.
 
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +16,6 @@ type Item = {
   href?: string;
 };
 
-const SPEED = 45; // px per second
 const GAP = 16;
 
 function Card({ item }: { item: Item }) {
@@ -62,85 +60,53 @@ function Card({ item }: { item: Item }) {
 
 export default function IndustriesSlider({ items }: { items: Item[] }) {
   const scroller = useRef<HTMLDivElement>(null);
-  const pos = useRef(0); // our own float scroll position
-  const paused = useRef(false);
+  const track = useRef<HTMLDivElement>(null);
+  const group = useRef<HTMLDivElement>(null);
+  const pos = useRef(0); // current scroll position (kept in sync with touch / trackpad scrolling)
   const tween = useRef<{ stop: () => void } | null>(null);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const reduced = useRef(false);
 
-  // Stable helpers (they only touch refs).
-  const half = useCallback(
-    () => (scroller.current ? scroller.current.scrollWidth / 2 : 0),
+  // Loop geometry. The track is: [left padding][group of cards][copy of the group].
+  // One loop period = the width of a group. Positions "lo" and "lo + period" show the same thing,
+  // so the row is always kept inside [lo, lo + period): the left edge of the view is then always
+  // over cards (never over the empty left padding), and every position is fully covered.
+  const period = useCallback(() => group.current?.offsetWidth ?? 0, []);
+  const lo = useCallback(
+    () => (track.current ? parseFloat(getComputedStyle(track.current).paddingLeft) || 0 : 0),
     [],
   );
   const apply = useCallback(
     (v: number) => {
-      const h = half();
-      pos.current = h ? ((v % h) + h) % h : v;
+      const h = period();
+      const l = lo();
+      pos.current = h ? l + ((((v - l) % h) + h) % h) : v;
       if (scroller.current) scroller.current.scrollLeft = pos.current;
     },
-    [half],
+    [period, lo],
   );
 
-  // Pause automatic movement, resume shortly after the user stops interacting.
-  const holdThenResume = useCallback((ms = 2500) => {
-    paused.current = true;
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => (paused.current = false), ms);
-  }, []);
-
+  // Start one period in: the first card lines up with the section text and the last card peeks
+  // in from the left edge (same picture as position 0, but without the empty gap on the left).
   useEffect(() => {
-    reduced.current = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    apply(period());
+  }, [apply, period]);
+
+  // The row never moves on its own. This only keeps our position in step when the visitor
+  // swipes or scrolls it by hand, and wraps around at either end.
+  useEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    let raf = 0;
-    let last = performance.now();
-    let hovering = false;
-
-    const tick = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-      if (!reduced.current && !paused.current && !hovering && !tween.current) {
-        apply(pos.current + SPEED * dt);
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    // User-driven scrolling (touch swipe / trackpad): adopt the new position and hold auto-scroll.
     const onScroll = () => {
       if (Math.abs(el.scrollLeft - pos.current) > 1.5 && !tween.current) {
         pos.current = el.scrollLeft;
-        const h = half();
-        if (h && el.scrollLeft >= h) apply(el.scrollLeft - h);
-        else if (h && el.scrollLeft <= 0) apply(el.scrollLeft + h);
-        holdThenResume();
+        const h = period();
+        const l = lo();
+        if (h && el.scrollLeft >= l + h) apply(el.scrollLeft - h);
+        else if (h && el.scrollLeft < l) apply(el.scrollLeft + h);
       }
     };
-    const enter = (e: PointerEvent) => {
-      if (e.pointerType === "mouse") hovering = true;
-    };
-    const leave = () => (hovering = false);
-    const focusIn = () => (paused.current = true);
-    const focusOut = () => (paused.current = false);
-
     el.addEventListener("scroll", onScroll, { passive: true });
-    el.addEventListener("pointerenter", enter);
-    el.addEventListener("pointerleave", leave);
-    el.addEventListener("focusin", focusIn);
-    el.addEventListener("focusout", focusOut);
-    return () => {
-      cancelAnimationFrame(raf);
-      if (resumeTimer.current) clearTimeout(resumeTimer.current);
-      el.removeEventListener("scroll", onScroll);
-      el.removeEventListener("pointerenter", enter);
-      el.removeEventListener("pointerleave", leave);
-      el.removeEventListener("focusin", focusIn);
-      el.removeEventListener("focusout", focusOut);
-    };
-  }, [holdThenResume, apply, half]);
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [apply, period, lo]);
 
   const step = (dir: 1 | -1) => {
     const el = scroller.current;
@@ -149,8 +115,8 @@ export default function IndustriesSlider({ items }: { items: Item[] }) {
       "a, div[class*='aspect']",
     ) as HTMLElement | null;
     const size = (card?.offsetWidth ?? 368) + GAP;
-    // make sure we have room to move backwards without hitting 0
-    if (dir === -1 && pos.current - size < 0) apply(pos.current + half());
+    // make sure we have room to move backwards without leaving the loop range
+    if (dir === -1 && pos.current - size < lo()) apply(pos.current + period());
     tween.current?.stop();
     const from = pos.current;
     tween.current = animate(from, from + dir * size, {
@@ -159,7 +125,6 @@ export default function IndustriesSlider({ items }: { items: Item[] }) {
       onUpdate: (v) => apply(v),
       onComplete: () => {
         tween.current = null;
-        holdThenResume(3000);
       },
     });
   };
@@ -187,8 +152,9 @@ export default function IndustriesSlider({ items }: { items: Item[] }) {
           ref={scroller}
           className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="flex w-max">
-            <div className="flex shrink-0 gap-4 pr-4">
+          {/* Left padding lines the first card up with the section title (same edge as the page container). */}
+          <div ref={track} className="flex w-max ps-[max(1.25rem,calc((100%-80rem)/2+1.25rem))] sm:ps-[max(2rem,calc((100%-80rem)/2+2rem))]">
+            <div ref={group} className="flex shrink-0 gap-4 pr-4">
               {items.map((item) => (
                 <Card key={item.title} item={item} />
               ))}

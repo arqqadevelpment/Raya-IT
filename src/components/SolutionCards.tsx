@@ -13,31 +13,12 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
-import {
-  ArrowUpRight,
-  Banknote,
-  BrainCircuit,
-  Cloud,
-  Layers,
-  MonitorSmartphone,
-  RadioTower,
-  ShieldCheck,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import GlassIcon from "./GlassIcons";
 import FlagMark from "./FlagMark";
 import { Reveal, SplitHeading } from "./motion";
 
 type Item = { title: string; description: string; href: string };
-
-const icons: LucideIcon[] = [
-  Cloud,
-  ShieldCheck,
-  MonitorSmartphone,
-  Layers,
-  BrainCircuit,
-  RadioTower,
-  Banknote,
-];
 
 function Card({
   item,
@@ -50,7 +31,6 @@ function Card({
 }) {
   const ref = useRef<HTMLLIElement>(null);
   const reduce = useReducedMotion();
-  const Icon = icons[index];
 
   // Scroll-linked entrance: the card starts low, tilted and dim, then settles flat.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 1", "start 0.5"] });
@@ -74,7 +54,7 @@ function Card({
     >
       <Link
         href={item.href}
-        className="card-noise group/card relative flex aspect-[4/5] min-h-[26rem] flex-col overflow-hidden rounded-xl bg-[#f1f1f1] p-7 text-ink transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)] sm:p-8"
+        className="card-noise group/card relative flex h-full min-h-[26rem] w-full flex-col overflow-hidden rounded-xl bg-[#f1f1f1] p-6 text-ink transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
       >
         {/* Hover: a brand-blue fill sweeps up from the bottom and the card content turns white. */}
         <span
@@ -85,11 +65,11 @@ function Card({
         </span>
 
         <motion.span
-          className="relative block w-fit text-electric transition-colors duration-300 group-hover/card:text-white"
-          whileHover={{ rotate: -8, scale: 1.08 }}
+          className="relative block w-fit"
+          whileHover={{ y: -3, scale: 1.06 }}
           transition={{ type: "spring", stiffness: 300, damping: 18 }}
         >
-          <Icon size={52} strokeWidth={1} aria-hidden="true" />
+          <GlassIcon index={index} size={64} />
         </motion.span>
 
         <div className="relative mt-auto">
@@ -97,7 +77,7 @@ function Card({
             <span className="h-2 w-2 rounded-full bg-electric transition-colors duration-300 group-hover/card:bg-white" />
             Solution {String(index + 1).padStart(2, "0")}
           </p>
-          <h3 className="mt-3 text-2xl font-normal leading-snug tracking-tight text-deep transition-colors duration-300 group-hover/card:text-white">
+          <h3 className="mt-3 text-xl font-normal leading-snug tracking-tight text-deep transition-colors duration-300 group-hover/card:text-white">
             {item.title}
           </h3>
           <span
@@ -136,29 +116,30 @@ export default function SolutionsGrid({
   items: Item[];
 }) {
   return (
-    <ul className="grid gap-5 [perspective:1100px] md:grid-cols-2 lg:grid-cols-3">
-      {/* Heading cell */}
-      <li className="md:col-span-2 lg:col-span-1">
-        <Reveal>
-          <p className="text-base text-grey">{eyebrow}</p>
+    <>
+      {/* Header: tag + title on the left, intro text on the right */}
+      <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+        <div>
+          <Reveal>
+            <p className="text-base text-grey">{eyebrow}</p>
+          </Reveal>
+          <SplitHeading
+            text={headline}
+            accent={accent}
+            className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl"
+          />
+        </div>
+        <Reveal delay={0.15}>
+          <p className="text-lg leading-relaxed text-white/70">{text}</p>
         </Reveal>
-        <SplitHeading
-          text={headline}
-          accent={accent}
-          className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl"
-        />
-      </li>
+      </div>
 
-      {items.map((item, i) => (
-        <Card key={item.title} item={item} index={i} cta={cardCta} />
-      ))}
-
-      {/* Closing cell: intro text + button */}
-      <li className="flex flex-col justify-end md:col-span-2 lg:col-span-1">
-        <Reveal>
-          <p className="text-base leading-relaxed text-white/75">{text}</p>
-        </Reveal>
-      </li>
-    </ul>
+      {/* Cards start below the title: 4 in the first row, 3 in the second */}
+      <ul className="mt-14 grid gap-5 [perspective:1100px] sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((item, i) => (
+          <Card key={item.title} item={item} index={i} cta={cardCta} />
+        ))}
+      </ul>
+    </>
   );
 }
