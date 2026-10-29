@@ -102,7 +102,7 @@ export default function Home() {
           >
             <Image
               src="/images/who-we-are.webp"
-              alt="Raya IT engineer reviewing a data center rack on a tablet"
+              alt="Hands typing on a laptop with holographic code and data dashboards"
               fill
               sizes="(min-width: 1024px) 30vw, 100vw"
               className="object-cover"

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const SRC = "/abstract-digital-data-wave-background-loop-2026-10-03-16-59-03-utc.mp4";
+const SRC = "/digital-data-technology-network-connection-backgro-2026-10-03-16-57-05-utc.mp4";
 
 // Looping background video. Stays paused (first frame) for visitors who prefer reduced motion.
 export default function HeroVideo() {
