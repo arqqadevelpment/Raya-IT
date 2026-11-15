@@ -107,11 +107,14 @@ export function Counter({
   to,
   suffix = "",
   group = true,
+  decimals = 0,
   className,
 }: {
   to: number;
   suffix?: string;
   group?: boolean;
+  /** Digits after the decimal point (e.g. 18.7). */
+  decimals?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -124,12 +127,14 @@ export function Counter({
     const controls = animate(0, to, {
       duration: 1.8,
       ease,
-      onUpdate: (v) => setN(Math.round(v)),
+      onUpdate: (v) => setN(Number(v.toFixed(decimals))),
     });
     return () => controls.stop();
-  }, [inView, reduce, to]);
+  }, [inView, reduce, to, decimals]);
 
-  const text = group ? n.toLocaleString("en-US") : String(n);
+  const text = group
+    ? n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+    : n.toFixed(decimals);
   return (
     <span ref={ref} className={className}>
       {text}

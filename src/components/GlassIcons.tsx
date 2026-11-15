@@ -177,7 +177,45 @@ function Card({ id }: P) {
   );
 }
 
-const icons = [Cloud, Shield, Workplace, Layers, Chip, Tower, Card];
+// 08 Vision (eye)
+function Eye({ id }: P) {
+  const d = "M5 32C13 18 23 12.5 32 12.5S51 18 59 32C51 46 41 51.5 32 51.5S13 46 5 32Z";
+  return (
+    <g>
+      <g filter={`url(#sd-${id})`}>
+        <path d={d} fill={`url(#gl-${id})`} {...stroke} />
+        <path d={d} fill={`url(#sh-${id})`} />
+      </g>
+      <circle cx="32" cy="32" r="11.5" fill={`url(#au-${id})`} />
+      <circle cx="32" cy="32" r="5.2" fill="#0B2C8C" />
+      <ellipse cx="28.8" cy="28.6" rx="3.2" ry="2.1" fill="#fff" fillOpacity="0.75" />
+    </g>
+  );
+}
+
+// 09 Mission (target)
+function Target({ id }: P) {
+  return (
+    <g>
+      <g filter={`url(#sd-${id})`}>
+        <circle cx="30" cy="34" r="24" fill={`url(#gl-${id})`} {...stroke} />
+        <circle cx="30" cy="34" r="24" fill={`url(#sh-${id})`} />
+        <circle cx="30" cy="34" r="15" fill={`url(#gl-${id})`} {...stroke} />
+      </g>
+      <circle cx="30" cy="34" r="6.5" fill={`url(#au-${id})`} />
+      <path
+        d="M46 18L32.5 31.5M46 18l1-7M46 18l7-1M46 18l-2.5 1.2"
+        fill="none"
+        stroke={`url(#au-${id})`}
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+}
+
+const icons = [Cloud, Shield, Workplace, Layers, Chip, Tower, Card, Eye, Target];
 
 export default function GlassIcon({ index, size = 64 }: { index: number; size?: number }) {
   const id = useId().replace(/:/g, "");
