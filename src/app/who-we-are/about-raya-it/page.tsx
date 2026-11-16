@@ -6,7 +6,6 @@ import GlassIcon from "@/components/GlassIcons";
 import PageHero from "@/components/PageHero";
 import { JourneyTimeline, RegionNetwork } from "@/components/AboutVisuals";
 import {
-  Counter,
   Reveal,
   ScrollWords,
   SplitHeading,
@@ -161,7 +160,8 @@ export default function AboutPage() {
                 >
                   <span className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-electric transition-transform duration-500 group-hover:scale-x-100" />
                   <dd className="order-1 text-4xl font-bold tracking-tight text-navy sm:text-5xl">
-                    <Counter to={f.to} suffix={f.suffix} decimals={f.decimals} />
+                    {f.to.toLocaleString("en-US", { minimumFractionDigits: f.decimals ?? 0, maximumFractionDigits: f.decimals ?? 0 })}
+                    {f.suffix}
                   </dd>
                   <dt className="order-2 mt-4 text-sm leading-snug text-ink/65">{f.label}</dt>
                 </div>

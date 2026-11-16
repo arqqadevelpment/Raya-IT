@@ -38,14 +38,45 @@ export default function OurBusinessesPage() {
                 cols={4}
                 rows={3}
               >
-                <Image
-                  src={b.image}
-                  alt={`${b.name}`}
-                  fill
-                  unoptimized
-                  sizes="(min-width: 1024px) 40rem, 100vw"
-                  className="object-cover"
-                />
+                {b.zoomOut ? (
+                  <>
+                    <Image
+                      src={b.image}
+                      alt=""
+                      fill
+                      unoptimized
+                      aria-hidden="true"
+                      sizes="(min-width: 1024px) 40rem, 100vw"
+                      className="scale-110 object-cover blur-2xl"
+                    />
+                    <div
+                      className="absolute inset-x-0 top-1/2 -translate-y-1/2"
+                      style={{
+                        height: `${b.zoomOut * 100}%`,
+                        maskImage:
+                          "linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent)",
+                      }}
+                    >
+                      <Image
+                        src={b.image}
+                        alt={`${b.name}`}
+                        fill
+                        unoptimized
+                        sizes="(min-width: 1024px) 40rem, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <Image
+                    src={b.image}
+                    alt={`${b.name}`}
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 40rem, 100vw"
+                    className="object-cover"
+                  />
+                )}
               </PixelReveal>
 
               <div className={flip ? "lg:order-1" : ""}>

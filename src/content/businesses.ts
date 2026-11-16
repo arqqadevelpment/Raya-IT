@@ -7,6 +7,8 @@ export type Business = {
   /** Trailing part of the name shown in the accent colour. */
   accent: string;
   image: string;
+  /** Show the photo smaller (fraction of the frame height) over a blurred copy, so less is cropped. */
+  zoomOut?: number;
   paragraphs: string[];
   stats: { to: number; suffix?: string; label: string }[];
   /** Standalone website of the subsidiary (not supplied yet). */
