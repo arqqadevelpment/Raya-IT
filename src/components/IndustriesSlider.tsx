@@ -18,9 +18,10 @@ type Item = {
 
 const GAP = 16;
 
-function Card({ item }: { item: Item }) {
-  const cls =
-    "group relative block aspect-[6/5] w-[19rem] shrink-0 overflow-hidden rounded-2xl text-white sm:w-[23rem]";
+export function Card({ item, fluid = false }: { item: Item; fluid?: boolean }) {
+  const cls = `group relative block aspect-[6/5] overflow-hidden rounded-2xl text-white ${
+    fluid ? "w-full" : "w-[19rem] shrink-0 sm:w-[23rem]"
+  }`;
   const inner = (
     <>
       <Image

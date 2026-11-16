@@ -14,13 +14,25 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 // Two ways to split a tile into two triangles; alternated in a checkerboard for a faceted look.
-const TRI_A = ["polygon(0 0, 100% 0, 0 100%)", "polygon(100% 0, 100% 100%, 0 100%)"];
-const TRI_B = ["polygon(0 0, 100% 0, 100% 100%)", "polygon(0 0, 100% 100%, 0 100%)"];
+const TRI_A = [
+  "polygon(0 0, 100% 0, 0 100%)",
+  "polygon(100% 0, 100% 100%, 0 100%)",
+];
+const TRI_B = [
+  "polygon(0 0, 100% 0, 100% 100%)",
+  "polygon(0 0, 100% 100%, 0 100%)",
+];
 
 export function MotionProvider({ children }: { children: ReactNode }) {
   return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
@@ -84,20 +96,25 @@ export function SplitHeading({
         viewport={{ once, margin: "0px 0px -80px 0px" }}
         transition={{ staggerChildren: 0.07, delayChildren: delay }}
       >
-        {words.map((word, i) => (
-          <span key={i}>
-            <span className="inline-block overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]">
-              <motion.span
-                className={`inline-block ${word.accent ? accentClassName : ""}`}
-                variants={{ hidden: { y: "115%" }, show: { y: 0 } }}
-                transition={{ duration: 0.75, ease }}
-              >
-                {word.w}
-              </motion.span>
+        {words.map((word, i) =>
+          word.w === "\n" ? (
+            // Forced line break: write " \n " inside the text (spaces on both sides).
+            <br key={i} />
+          ) : (
+            <span key={i}>
+              <span className="inline-block overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]">
+                <motion.span
+                  className={`inline-block ${word.accent ? accentClassName : ""}`}
+                  variants={{ hidden: { y: "115%" }, show: { y: 0 } }}
+                  transition={{ duration: 0.75, ease }}
+                >
+                  {word.w}
+                </motion.span>
+              </span>
+              {i < words.length - 1 ? " " : null}
             </span>
-            {i < words.length - 1 ? " " : null}
-          </span>
-        ))}
+          ),
+        )}
       </motion.span>
     </Tag>
   );
@@ -133,7 +150,10 @@ export function Counter({
   }, [inView, reduce, to, decimals]);
 
   const text = group
-    ? n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+    ? n.toLocaleString("en-US", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })
     : n.toFixed(decimals);
   return (
     <span ref={ref} className={className}>
@@ -172,7 +192,10 @@ export function PixelReveal({
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 grid"
-          style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)` }}
+          style={{
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            gridTemplateRows: `repeat(${rows}, 1fr)`,
+          }}
         >
           {Array.from({ length: count }, (_, i) =>
             shape === "triangle" ? (
@@ -181,10 +204,17 @@ export function PixelReveal({
                   <motion.span
                     key={k}
                     className={`absolute inset-0 ${coverClassName}`}
-                    style={{ clipPath: ((i + Math.floor(i / cols)) % 2 === 0 ? TRI_A : TRI_B)[k] }}
+                    style={{
+                      clipPath: ((i + Math.floor(i / cols)) % 2 === 0
+                        ? TRI_A
+                        : TRI_B)[k],
+                    }}
                     initial={{ opacity: 1 }}
                     animate={{ opacity: inView ? 0 : 1 }}
-                    transition={{ duration: 0.3, delay: ((((i * 2 + k) * 7919) % 97) / 97) * 0.8 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: ((((i * 2 + k) * 7919) % 97) / 97) * 0.8,
+                    }}
                   />
                 ))}
               </span>
@@ -195,7 +225,10 @@ export function PixelReveal({
                 initial={{ opacity: 1 }}
                 animate={{ opacity: inView ? 0 : 1 }}
                 // deterministic pseudo-random delay so server and client markup match
-                transition={{ duration: 0.25, delay: (((i * 7919) % 97) / 97) * 0.7 }}
+                transition={{
+                  duration: 0.25,
+                  delay: (((i * 7919) % 97) / 97) * 0.7,
+                }}
               />
             ),
           )}
@@ -233,7 +266,10 @@ export function ScrollWords({
   as?: ElementType;
 }) {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.55"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.85", "end 0.55"],
+  });
   const words = text.split(" ");
   return (
     <Tag ref={ref} className={className}>
@@ -300,7 +336,9 @@ export function Marquee({
   return (
     <div
       className={`marquee overflow-hidden ${
-        fade ? "[mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]" : ""
+        fade
+          ? "[mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]"
+          : ""
       }`}
     >
       <div
@@ -330,13 +368,28 @@ export function ParallaxBg({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [`-${strength}%`, `${strength}%`]);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [`-${strength}%`, `${strength}%`],
+  );
   return (
-    <div ref={ref} aria-hidden="true" className={`absolute inset-0 overflow-hidden ${className}`}>
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className={`absolute inset-0 overflow-hidden ${className}`}
+    >
       {/* Layer is taller than the section so the drift never reveals an edge. */}
       <motion.div
-        style={reduce ? { top: 0, bottom: 0 } : { y, top: `-${strength}%`, bottom: `-${strength}%` }}
+        style={
+          reduce
+            ? { top: 0, bottom: 0 }
+            : { y, top: `-${strength}%`, bottom: `-${strength}%` }
+        }
         className="absolute inset-x-0"
       >
         {children}
@@ -348,7 +401,10 @@ export function ParallaxBg({
 /** Floating flag-mark composition for the hero, with scroll parallax. */
 export function HeroVisual({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
 
@@ -360,7 +416,12 @@ export function HeroVisual({ className = "" }: { className?: string }) {
   ];
 
   return (
-    <motion.div ref={ref} style={{ y, rotate }} className={className} aria-hidden="true">
+    <motion.div
+      ref={ref}
+      style={{ y, rotate }}
+      className={className}
+      aria-hidden="true"
+    >
       <div className="absolute inset-0 -z-10 rounded-full bg-electric/30 blur-[90px]" />
       <svg viewBox="-6 -6 160 160" className="h-full w-full overflow-visible">
         {tri.map((t, i) => (
@@ -374,7 +435,12 @@ export function HeroVisual({ className = "" }: { className?: string }) {
             transition={{
               opacity: { duration: 0.9, delay: 0.3 + i * 0.12 },
               scale: { duration: 0.9, delay: 0.3 + i * 0.12, ease },
-              y: { duration: 6 + i, repeat: Infinity, ease: "easeInOut", delay: t.delay },
+              y: {
+                duration: 6 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: t.delay,
+              },
             }}
             style={{ transformBox: "fill-box", transformOrigin: "center" }}
           />
