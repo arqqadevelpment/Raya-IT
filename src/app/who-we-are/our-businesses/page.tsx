@@ -114,7 +114,7 @@ export default function OurBusinessesPage() {
 
                 {b.href && (
                   <Reveal delay={0.25} className="mt-8">
-                    <ButtonLink href={b.href}>
+                    <ButtonLink href={b.href} tone="light">
                       Visit website
                       <span className="sr-only"> (opens in a new tab)</span>
                     </ButtonLink>

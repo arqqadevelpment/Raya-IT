@@ -157,9 +157,6 @@ export default function WorkplaceDetailPage({ d }: { d: WorkplaceDetail }) {
                           </span>
                         );
                       })()}
-                      <span className="text-sm font-semibold text-sky">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
                     </div>
                     <h3 className="mt-6 text-xl font-semibold leading-snug text-white">{c.title}</h3>
                     {c.text && <p className="mt-3 text-sm leading-relaxed text-white/75">{c.text}</p>}

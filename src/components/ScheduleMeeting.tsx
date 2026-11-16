@@ -11,7 +11,7 @@ export default function ScheduleMeeting({ topic }: { topic: string }) {
             Talk to our team about {topic}
           </h2>
         </div>
-        <ButtonLink href={`/contact?topic=${encodeURIComponent(topic)}`}>
+        <ButtonLink href={`/contact?topic=${encodeURIComponent(topic)}`} tone="light">
           Schedule a Meeting
         </ButtonLink>
       </Container>

@@ -14,7 +14,6 @@ import {
   useTransform,
 } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import GlassIcon from "./GlassIcons";
 import FlagMark from "./FlagMark";
 import { Reveal, SplitHeading } from "./motion";
 
@@ -54,40 +53,28 @@ function Card({
     >
       <Link
         href={item.href}
-        className="card-noise group/card relative flex h-full min-h-[26rem] w-full flex-col overflow-hidden rounded-xl bg-[#f1f1f1] p-6 text-ink transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
+        className="card-noise group/card relative flex h-full min-h-[22rem] w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-deep/45 p-6 text-white backdrop-blur-sm transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
       >
         {/* Hover: a brand-blue fill sweeps up from the bottom and the card content turns white. */}
         <span
           aria-hidden="true"
           className="absolute inset-0 origin-bottom scale-y-0 bg-gradient-to-br from-electric to-navy transition-transform duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-y-100"
         >
-          <FlagMark className="absolute -bottom-8 -right-8 h-48 w-48 text-white/10" />
+          <FlagMark className="absolute bottom-5 right-5 h-32 w-32 text-white/10" />
         </span>
 
-        <motion.span
-          className="relative block w-fit"
-          whileHover={{ y: -3, scale: 1.06 }}
-          transition={{ type: "spring", stiffness: 300, damping: 18 }}
-        >
-          <GlassIcon index={index} size={64} />
-        </motion.span>
-
-        <div className="relative mt-auto">
-          <p className="flex items-center gap-2 text-sm font-medium text-ink transition-colors duration-300 group-hover/card:text-white">
-            <span className="h-2 w-2 rounded-full bg-electric transition-colors duration-300 group-hover/card:bg-white" />
-            Solution {String(index + 1).padStart(2, "0")}
-          </p>
-          <h3 className="mt-3 text-xl font-normal leading-snug tracking-tight text-deep transition-colors duration-300 group-hover/card:text-white">
+        <div className="relative flex flex-1 flex-col">
+          <h3 className="text-xl font-normal leading-snug tracking-tight text-white transition-colors duration-300 group-hover/card:text-white">
             {item.title}
           </h3>
           <span
             aria-hidden="true"
-            className="mt-5 block h-px bg-ink/20 transition-colors duration-300 group-hover/card:bg-white/35"
+            className="mt-5 block h-px bg-white/20 transition-colors duration-300 group-hover/card:bg-white/35"
           />
-          <p className="mt-4 text-sm leading-relaxed text-ink/65 transition-colors duration-300 group-hover/card:text-white/85">
+          <p className="mt-4 text-sm leading-relaxed text-white/65 transition-colors duration-300 group-hover/card:text-white/85">
             {item.description}
           </p>
-          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-electric transition-colors duration-300 group-hover/card:text-white">
+          <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-sky transition-colors duration-300 group-hover/card:text-white">
             {cta}
             <ArrowUpRight
               size={15}

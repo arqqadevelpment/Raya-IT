@@ -3,7 +3,7 @@ import {
 } from "lucide-react";
 import HeroVideo from "@/components/HeroVideo";
 import IndustriesSlider from "@/components/IndustriesSlider";
-import ServicesAccordion from "@/components/ServicesAccordion";
+import ServicesOrbit from "@/components/ServicesOrbit";
 import SolutionsGrid from "@/components/SolutionCards";
 import {
   Counter,
@@ -64,6 +64,7 @@ export default function Home() {
                 as="span"
                 text="for What’s Next."
                 delay={0.2}
+                gradient
                 className="block text-electric"
               />
             </h2>
@@ -75,7 +76,7 @@ export default function Home() {
               ))}
             </div>
             <Reveal delay={0.2} className="mt-8">
-              <ButtonLink href={discover.cta.href}>{discover.cta.label}</ButtonLink>
+              <ButtonLink href={discover.cta.href} tone="light">{discover.cta.label}</ButtonLink>
             </Reveal>
 
             {/* Stats: one bordered container, divided cells */}
@@ -113,7 +114,18 @@ export default function Home() {
 
       {/* 03 — Solutions */}
       <section className="relative overflow-hidden bg-deep py-24 text-white sm:py-32" id="solutions">
-        <Container>
+        <ParallaxBg strength={12}>
+          <Image
+            src="/images/home/solutions-bg.webp"
+            alt=""
+            fill
+            unoptimized
+            sizes="100vw"
+            className="object-cover"
+          />
+        </ParallaxBg>
+        <div className="absolute inset-0 bg-deep/72" />
+        <Container className="relative">
           <SolutionsGrid
             eyebrow={solutions.eyebrow}
             headline={solutions.headline}
@@ -125,10 +137,10 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 04 — Services (accordion) */}
-      <section className="relative bg-surface py-24 sm:py-32" id="services">
-        <Container className="grid gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
-          <div className="lg:sticky lg:top-28 lg:self-start">
+      {/* 04 — Services (orbit: dot-mesh sphere with numbered service nodes) */}
+      <section className="relative overflow-hidden bg-surface py-24 sm:py-32" id="services">
+        <Container className="relative">
+          <div className="mx-auto max-w-3xl text-center">
             <Reveal>
               <p className="text-base text-grey">{services.eyebrow}</p>
             </Reveal>
@@ -142,9 +154,9 @@ export default function Home() {
               <p className="mt-6 text-lg leading-relaxed text-ink/70">{services.text}</p>
             </Reveal>
           </div>
-          <Reveal delay={0.1}>
-            <ServicesAccordion items={services.items} cta={services.cardCta} />
-          </Reveal>
+          <div className="mt-20 sm:mt-24 lg:mt-36">
+            <ServicesOrbit items={services.items} cta={services.cardCta} />
+          </div>
         </Container>
       </section>
 
@@ -202,6 +214,7 @@ export default function Home() {
                   as="span"
                   text={sustainability.lines[1]}
                   delay={0.2}
+                  gradient
                   className="block text-sky"
                 />
               </h2>
@@ -234,7 +247,7 @@ export default function Home() {
             <Reveal delay={0.15}>
               <p className="text-lg leading-relaxed text-ink/70">{partners.text}</p>
               <div className="mt-8">
-                <ButtonLink href={partners.cta.href}>
+                <ButtonLink href={partners.cta.href} tone="light">
                   {partners.cta.label}
                 </ButtonLink>
               </div>

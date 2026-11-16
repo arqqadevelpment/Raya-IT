@@ -69,6 +69,7 @@ export function SplitHeading({
   as: Tag = "h2",
   className = "",
   accentClassName = "text-sky",
+  gradient = false,
   delay = 0,
   once = true,
 }: {
@@ -77,15 +78,31 @@ export function SplitHeading({
   as?: ElementType;
   className?: string;
   accentClassName?: string;
+  /** Apply the gradient to the whole text (for a headline line that is entirely the accent). */
+  gradient?: boolean;
   delay?: number;
   once?: boolean;
 }) {
-  const accentAt = accent ? text.indexOf(accent) : -1;
+  const accentAt = gradient ? 0 : accent ? text.indexOf(accent) : -1;
   const split = text.split(" ");
   const words = split.map((w, i) => {
     const start = split.slice(0, i).join(" ").length + (i > 0 ? 1 : 0);
-    return { w, accent: accentAt >= 0 && start >= accentAt };
+    return { w, accent: accentAt >= 0 && start >= accentAt, from: 0, to: 1 };
   });
+  // Accent words share ONE gradient across the whole phrase: each word gets its slice of it,
+  // sized by character count (so the colour flows continuously from word to word).
+  const accentWords = words.filter((x) => x.accent && x.w !== "\n");
+  const total = accentWords.reduce((n, x) => n + x.w.length, 0) || 1;
+  let run = 0;
+  for (const x of accentWords) {
+    x.from = run / total;
+    run += x.w.length;
+    x.to = run / total;
+  }
+  const onDark = (gradient ? className : accentClassName).includes("text-sky");
+  const gradientCss = onDark
+    ? "linear-gradient(90deg,#3b82ff 0%,#6aa8f5 50%,#b5d9fb 100%)"
+    : "linear-gradient(90deg,#001780 0%,#0165e8 55%,#4aa3f0 100%)";
 
   return (
     <Tag className={className}>
@@ -104,7 +121,20 @@ export function SplitHeading({
             <span key={i}>
               <span className="inline-block overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]">
                 <motion.span
-                  className={`inline-block ${word.accent ? accentClassName : ""}`}
+                  className={`inline-block ${word.accent ? "bg-clip-text text-transparent" : ""}`}
+                  style={
+                    word.accent
+                      ? {
+                          backgroundImage: gradientCss,
+                          // stretch the full gradient over the phrase, then show this word's slice
+                          backgroundSize: `${(1 / Math.max(word.to - word.from, 0.0001)) * 100}% 100%`,
+                          backgroundPosition: `${
+                            word.to - word.from >= 1 ? 0 : (word.from / (1 - (word.to - word.from))) * 100
+                          }% 0`,
+                          WebkitBoxDecorationBreak: "clone",
+                        }
+                      : undefined
+                  }
                   variants={{ hidden: { y: "115%" }, show: { y: 0 } }}
                   transition={{ duration: 0.75, ease }}
                 >

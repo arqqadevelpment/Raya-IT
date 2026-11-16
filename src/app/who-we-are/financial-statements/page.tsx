@@ -37,7 +37,7 @@ export default function FinancialStatementsPage() {
                       aria-hidden="true"
                       className="absolute inset-0 origin-bottom scale-y-0 bg-gradient-to-br from-electric to-navy transition-transform duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-y-100"
                     >
-                      <FlagMark className="absolute -bottom-8 -right-8 h-48 w-48 text-white/10" />
+                      <FlagMark className="absolute bottom-5 right-5 h-32 w-32 text-white/10" />
                     </span>
 
                     <span className="relative grid h-12 w-12 place-items-center rounded-xl bg-white text-electric shadow-[0_1px_6px_rgba(0,23,128,0.12)] transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white">

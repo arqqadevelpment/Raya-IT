@@ -86,3 +86,53 @@
 .card-noise {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
+
+/* Glowing gradient-stroke button (Raya IT blues): transparent fill, electric→sky outline, soft halo. */
+.btn-glow {
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background-color: rgba(3, 10, 43, 0.15);
+  box-shadow:
+    0 -8px 26px -10px rgba(1, 101, 232, 0.6),
+    0 10px 30px -14px rgba(137, 193, 240, 0.35);
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+}
+.btn-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(90deg, #0165e8 0%, #2460ac 35%, #89c1f0 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+.btn-glow:hover {
+  background-color: rgba(3, 10, 43, 0.3);
+  box-shadow:
+    0 -8px 34px -6px rgba(1, 101, 232, 0.85),
+    0 12px 36px -10px rgba(137, 193, 240, 0.6);
+}
+.btn-glow:focus-visible {
+  outline: 2px solid #89c1f0;
+  outline-offset: 3px;
+}
+
+/* Light-background version: navy text, same gradient stroke, no fill. */
+.btn-glow-light {
+  color: #000a3d;
+  background-color: transparent;
+  box-shadow:
+    0 8px 28px -10px rgba(1, 101, 232, 0.45),
+    0 0 22px -8px rgba(137, 193, 240, 0.6);
+}
+.btn-glow-light:hover {
+  background-color: rgba(1, 101, 232, 0.08);
+  box-shadow:
+    0 10px 34px -8px rgba(1, 101, 232, 0.6),
+    0 0 28px -6px rgba(137, 193, 240, 0.8);
+}

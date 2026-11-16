@@ -26,40 +26,29 @@ export function Eyebrow({ children, onDark = false }: { children: ReactNode; onD
   );
 }
 
-// Pill button with a white arrow circle on the right (matches the "Discover Our Story" button).
+// Glowing gradient-stroke button (see .btn-glow in globals.css). Variants kept for call-site compatibility.
 const base =
-  "group inline-flex items-center gap-4 rounded-full py-1.5 pl-6 pr-1.5 text-sm font-semibold transition-colors";
-const variants = {
-  primary: { button: "bg-electric text-white hover:bg-blue", circle: "bg-white text-electric" },
-  navy: { button: "bg-deep text-white hover:bg-navy", circle: "bg-white text-deep" },
-  outline: {
-    button: "border border-navy/25 text-navy hover:border-navy hover:bg-navy/5",
-    circle: "bg-navy text-white",
-  },
-  outlineLight: {
-    button: "border border-white/40 text-white hover:bg-white/10",
-    circle: "bg-white text-deep",
-  },
-};
+  "btn-glow group inline-flex items-center justify-center gap-3 rounded-2xl px-8 py-4 text-sm font-semibold";
 
 export function ButtonLink({
   href,
   children,
-  variant = "primary",
+  tone = "dark",
 }: {
   href: string;
   children: ReactNode;
-  variant?: keyof typeof variants;
+  variant?: "primary" | "navy" | "outline" | "outlineLight";
+  /** "light" = white fill, for buttons that sit on white / light backgrounds. */
+  tone?: "dark" | "light";
 }) {
-  const v = variants[variant];
   return (
-    <Link href={href} className={`${base} ${v.button}`}>
+    <Link href={href} className={`${base}${tone === "light" ? " btn-glow-light" : ""}`}>
       {children}
-      <span
-        className={`grid h-10 w-10 place-items-center rounded-full transition-transform group-hover:translate-x-0.5 ${v.circle}`}
-      >
-        <ArrowRight size={18} aria-hidden="true" />
-      </span>
+      <ArrowRight
+        size={16}
+        aria-hidden="true"
+        className="transition-transform group-hover:translate-x-0.5"
+      />
     </Link>
   );
 }

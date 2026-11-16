@@ -95,27 +95,28 @@ export const collaborationDetail: WorkplaceDetail = {
     "The way we work together has changed. Your employees, customers, suppliers and business partners are teaming up from all over the world, whenever they want, from any device. RAYA IT, provides consultancy, Design and Implementation for better collaboration in the age of digital transformation.",
     "We help you to design the most beneficial solutions for your business that will bring flexibility and simplicity in your work processes, while eliminating risk, increasing security and maintaining your budget.",
   ],
+  // PROPOSED EDIT (requested by client): component descriptions shortened from the published wording.
   componentsTitle: "Solution Components",
   components: [
     {
       title: "Unified Communication", icon: "messages",
-      text: "Consolidate your communications infrastructure and enable your people and teams to communicate simply with a unified communication solution featuring IP telephony, high definition video, unified messaging, instant messaging and presence, plus much more.",
+      text: "One platform for IP telephony, HD video, unified and instant messaging, and presence, so people and teams communicate simply.",
     },
     {
       title: "Tele-presence and Video Conferencing", icon: "video",
-      text: "Raya IT/ Cisco have the Complete Video Conferencing Solution portfolio, Starting from the Mobile apps, Endpoints down to the infrastructure level, not only this but also Cisco provide a lot of APIs for integration with 3rd part Apps and vendors, adding to this cisco solution is all in one consolidated Video Solution that provide several VC infrastructure component into one box.",
+      text: "A complete Raya IT / Cisco video portfolio, from mobile apps and endpoints to infrastructure, with open APIs for integration.",
     },
     {
       title: "Contact Center and Self Services", icon: "headset",
-      text: "We believe that your contact center platform should enable your organization to be agile in the way you interact with customers, should deliver a truly connected customer journey across all types of interactions and should be easy to deploy and intuitive to use. Whether you are creating a new contact center or looking to upgrade an existing platform you have grown out of, Raya IT/ Cisco provides you with an effective way to start delivering tomorrow’s customer collaboration today. You simply select the features and options that aligns to your contact center needs and we will design & deploy it for you.",
+      text: "A connected customer journey across every channel, on a contact center platform that is easy to deploy and that we design and deploy for you.",
     },
     {
       title: "Digital Media Signage", icon: "signage",
-      text: "Digital Media Signage is a solution for creating, managing and deploying digital content. It is a reliable and user-friendly software system that gives marketers and retailers total control over how and where content is played across a network of screens, ensuring relevance to current audiences. We approach each project by focusing on flexible solutions. Our professional customized solutions come with everything you need including solution design, installation assistance, customer service and support options to fit any project requirements. We have the in-house expertise, tools and capabilities to successfully tackle any project, no matter the size or complexity.",
+      text: "Create, manage and publish content across a network of screens, with design, installation and support included.",
     },
     {
       title: "IPTV and Content Delivery", icon: "tv",
-      text: "IPTV Solution delivers television services over a local access network (LAN) or the Internet via a communication method called Internet Protocol (IP). These secure packet-switched networks are access agnostic, meaning that all transmitted content including audio, video, text, images, and data, can be viewed on any connected device. Television services offered through IPTV server technology are subscription based and fall under three broad categories: live TV optionally featuring interactivity with the show currently broadcasted; time-shifted TV which includes catch-up TV that replays a show from a video streaming server that was broadcasted hours or days earlier; and video on demand (VOD), which allows subscribers to select and view videos of interest from a catalog, or library.",
+      text: "TV and video delivered over IP to any connected device: live TV, catch-up TV and video on demand.",
     },
   ],
   useCases: [

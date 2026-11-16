@@ -35,7 +35,7 @@ export function DirectorPhoto({ d, sizes }: { d: Director; sizes: string }) {
       aria-label={d.name}
       className="absolute inset-0 grid place-items-center bg-gradient-to-br from-electric via-navy to-deep"
     >
-      <FlagMark className="absolute -bottom-8 -right-8 h-56 w-56 text-white/10" />
+      <FlagMark className="absolute bottom-5 right-5 h-36 w-36 text-white/10" />
       <span className="relative text-6xl font-bold tracking-tight text-white/90">{initials(d.name)}</span>
     </div>
   );

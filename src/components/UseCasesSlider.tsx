@@ -91,7 +91,7 @@ export default function UseCasesSlider({
         onScroll={update}
         className="mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-8 pt-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {items.map((u, i) => {
+        {items.map((u) => {
           const Icon = (u.icon && icons[u.icon]) || Users;
           return (
             <li
@@ -102,9 +102,6 @@ export default function UseCasesSlider({
                 <div className="flex items-center justify-between">
                   <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-electric to-navy text-white shadow-[0_10px_24px_-10px_rgba(1,101,232,0.7),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform duration-300 group-hover:scale-105">
                     <Icon size={26} strokeWidth={1.6} aria-hidden="true" />
-                  </span>
-                  <span className="text-sm font-semibold text-electric">
-                    {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold leading-snug text-navy">

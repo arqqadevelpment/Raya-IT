@@ -59,7 +59,7 @@ const taglines: Record<string, string> = {
 };
 
 const pill =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition-colors";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-2.5 text-sm font-semibold";
 
 function MegaPanel({ group, close }: { group: MenuGroup; close: () => void }) {
   const groupIcons = icons[group.slug] ?? [];
@@ -68,7 +68,7 @@ function MegaPanel({ group, close }: { group: MenuGroup; close: () => void }) {
       <div className="grid gap-2 lg:grid-cols-[300px_1fr]">
         {/* Feature card */}
         <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-navy via-deep to-deep p-7 text-white">
-          <FlagMark className="pointer-events-none absolute -bottom-10 -right-10 z-0 h-56 w-56 text-electric/40" />
+          <FlagMark className="pointer-events-none absolute bottom-5 right-5 z-0 h-32 w-32 text-electric/40" />
           {/* relative + z-10 keeps the text above the shapes */}
           <p className="relative z-10 text-2xl font-semibold leading-snug tracking-tight">{group.title}</p>
           <p className="relative z-10 mt-3 max-w-[14rem] text-base leading-relaxed text-white/70">
@@ -154,7 +154,7 @@ function MegaPanel({ group, close }: { group: MenuGroup; close: () => void }) {
               <Link
                 href="/contact"
                 onClick={close}
-                className={`${pill} shrink-0 bg-deep px-6 py-3 text-white shadow-lg hover:bg-electric`}
+                className={`${pill} btn-glow btn-glow-light shrink-0 px-6 py-3`}
               >
                 Contact us
               </Link>
@@ -241,11 +241,11 @@ export default function Header() {
             <div className="hidden items-center gap-2 xl:flex">
               <Link
                 href="/contact/technical-support"
-                className={`${pill} border border-white/20 text-white hover:bg-white/10`}
+                className={`${pill} btn-glow`}
               >
                 Technical Support
               </Link>
-              <Link href="/contact" className={`${pill} bg-electric text-white hover:bg-blue`}>
+              <Link href="/contact" className={`${pill} btn-glow`}>
                 Contact Us
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
@@ -318,11 +318,11 @@ export default function Header() {
                 <li className="flex flex-col gap-2 py-4">
                   <Link
                     href="/contact/technical-support"
-                    className={`${pill} border border-navy/20 text-navy`}
+                    className={`${pill} btn-glow`}
                   >
                     Technical Support
                   </Link>
-                  <Link href="/contact" className={`${pill} bg-electric py-3 text-white`}>
+                  <Link href="/contact" className={`${pill} btn-glow py-3`}>
                     Contact Us
                     <ArrowRight size={16} aria-hidden="true" />
                   </Link>

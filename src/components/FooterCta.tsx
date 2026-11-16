@@ -29,7 +29,7 @@ export default function FooterCta() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <FlagMark className="pointer-events-none absolute -right-20 -top-10 h-[26rem] w-[26rem] text-white/10" />
+        <FlagMark className="pointer-events-none absolute right-6 top-1/2 aspect-square h-[78%] -translate-y-1/2 text-white/10 sm:right-12" />
         <Container className="relative py-24 sm:py-32">
           <SplitHeading
             as="h2"

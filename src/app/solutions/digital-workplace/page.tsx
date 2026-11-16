@@ -39,12 +39,11 @@ export default function DigitalWorkplacePage() {
                 </div>
               </Reveal>
               <div className={flip ? "lg:order-1" : ""}>
-                <p className="text-base text-ink/60">{String(i + 1).padStart(2, "0")}</p>
                 <SplitHeading
                   text={s.title}
                   accent={s.accent}
                   accentClassName="text-electric"
-                  className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-navy sm:text-5xl"
+                  className="text-4xl font-bold leading-[1.1] tracking-tight text-navy sm:text-5xl"
                 />
                 <p className="mt-6 text-base leading-relaxed text-ink/70">{s.summary}</p>
                 <ul className="mt-6 space-y-2.5">
@@ -56,7 +55,7 @@ export default function DigitalWorkplacePage() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <ButtonLink href={s.href}>Learn more</ButtonLink>
+                  <ButtonLink href={s.href} tone="light">Learn more</ButtonLink>
                 </div>
               </div>
             </Container>

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, Eye, MapPin, Target } from "lucide-react";
 import FlagMark from "@/components/FlagMark";
-import GlassIcon from "@/components/GlassIcons";
 import PageHero from "@/components/PageHero";
 import { JourneyTimeline, RegionNetwork } from "@/components/AboutVisuals";
 import {
@@ -98,9 +97,9 @@ export default function AboutPage() {
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {[
-              { icon: 7, label: "Vision", text: vision }, // glass eye
-              { icon: 8, label: "Mission", text: mission }, // glass target
-            ].map(({ icon, label, text }, i) => (
+              { Icon: Eye, label: "Vision", text: vision },
+              { Icon: Target, label: "Mission", text: mission },
+            ].map(({ Icon, label, text }, i) => (
               <Reveal key={label} delay={0.12 * i} className="h-full">
                 {/* Hover: lifts and a brand-blue fill sweeps up from the bottom, like the Solutions cards. */}
                 <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-8 transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)] sm:p-10">
@@ -108,10 +107,10 @@ export default function AboutPage() {
                     aria-hidden="true"
                     className="absolute inset-0 origin-bottom scale-y-0 bg-gradient-to-br from-electric to-navy transition-transform duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-y-100"
                   >
-                    <FlagMark className="absolute -bottom-8 -right-8 h-56 w-56 text-white/10" />
+                    <FlagMark className="absolute bottom-5 right-5 h-36 w-36 text-white/10" />
                   </span>
-                  <span className="relative block w-fit transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-                    <GlassIcon index={icon} size={64} />
+                  <span className="relative grid h-14 w-14 place-items-center rounded-2xl border border-white/25 bg-white/15 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
+                    <Icon size={26} strokeWidth={1.6} aria-hidden="true" />
                   </span>
                   <h3 className="relative mt-8 text-sm font-semibold uppercase tracking-[0.16em] text-sky transition-colors duration-300 group-hover:text-white/80">
                     {label}

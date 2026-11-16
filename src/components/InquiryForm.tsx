@@ -65,7 +65,7 @@ export default function InquiryForm({ defaultTopic = "" }: { defaultTopic?: stri
       <div className="sm:col-span-2 lg:col-span-4">
         <button
           type="submit"
-          className="rounded-full bg-electric px-7 py-3 text-sm font-semibold text-white hover:bg-blue"
+          className="btn-glow rounded-2xl px-8 py-3.5 text-sm font-semibold"
         >
           Send inquiry
         </button>
