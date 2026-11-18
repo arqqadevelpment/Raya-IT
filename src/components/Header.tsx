@@ -211,12 +211,12 @@ export default function Header() {
             <Link
               href="/"
               aria-label="Raya IT — home"
-              className="shrink-0 [&_img]:!h-[34px] min-[1440px]:[&_img]:!h-[38px]"
+              className="shrink-0 [&_img]:!h-[34px] lg:[&_img]:!h-[30px] xl:[&_img]:!h-[34px] min-[1440px]:[&_img]:!h-[38px]"
             >
               <Logo variant="white" height={38} />
             </Link>
 
-            <nav aria-label="Primary" className="hidden items-center gap-1 xl:ml-4 min-[1440px]:ml-6 xl:flex">
+            <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:ml-3 lg:flex xl:ml-4 xl:gap-1 min-[1440px]:ml-6">
               {menu.map((g) => (
                 <button
                   key={g.slug}
@@ -225,7 +225,7 @@ export default function Header() {
                   aria-haspopup="true"
                   onClick={() => setOpen(open === g.slug ? null : g.slug)}
                   onMouseEnter={() => setOpen(g.slug)}
-                  className={`flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium min-[1440px]:px-3 transition-colors hover:text-white ${
+                  className={`flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-2 text-[13px] font-medium xl:px-2.5 xl:text-sm min-[1440px]:px-3 transition-colors hover:text-white ${
                     open === g.slug || isActive(g.slug) ? "bg-white/10 text-white" : "text-white/70"
                   }`}
                 >
@@ -238,10 +238,10 @@ export default function Header() {
               ))}
             </nav>
 
-            <div className="hidden items-center gap-2 xl:flex">
+            <div className="hidden items-center gap-2 lg:flex">
               <Link
                 href="/contact/technical-support"
-                className={`${pill} btn-glow`}
+                className={`${pill} btn-glow max-xl:hidden`}
               >
                 Technical Support
               </Link>
@@ -253,7 +253,7 @@ export default function Header() {
 
             <button
               type="button"
-              className="rounded-full p-2.5 text-white xl:hidden"
+              className="rounded-full p-2.5 text-white lg:hidden"
               aria-label={mobile ? "Close menu" : "Open menu"}
               aria-expanded={mobile}
               onClick={() => setMobile(!mobile)}
@@ -264,7 +264,7 @@ export default function Header() {
 
           {/* Desktop mega menu — floats below the pill; pt-3 bridges the hover gap. */}
           {current && (
-            <div className="absolute left-1/2 top-full hidden w-[min(1120px,100%)] -translate-x-1/2 pt-5 xl:block">
+            <div className="absolute left-1/2 top-full hidden w-[min(1120px,100%)] -translate-x-1/2 pt-5 lg:block">
               <MegaPanel group={current} close={() => setOpen(null)} />
             </div>
           )}
@@ -273,7 +273,7 @@ export default function Header() {
           {mobile && (
             <nav
               aria-label="Mobile"
-              className="mt-3 max-h-[calc(100dvh-110px)] overflow-y-auto rounded-3xl bg-white text-ink shadow-2xl xl:hidden"
+              className="mt-3 max-h-[calc(100dvh-110px)] overflow-y-auto rounded-3xl bg-white text-ink shadow-2xl lg:hidden"
             >
               <ul className="divide-y divide-mist px-5 py-2">
                 {menu.map((g) => (
