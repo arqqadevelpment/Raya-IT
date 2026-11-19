@@ -11,7 +11,7 @@ export default function Logo({
   const width = Math.round((height * 7892) / 1164);
   return (
     <Image
-      src={variant === "white" ? "/brand/logo-white.png" : "/brand/logo-color.png"}
+      src={variant === "white" ? "/brand/logo-white-v2.png" : "/brand/logo-color-v2.png"}
       alt="Raya Information Technology"
       width={width}
       height={height}

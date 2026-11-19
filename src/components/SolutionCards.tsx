@@ -53,7 +53,7 @@ function Card({
     >
       <Link
         href={item.href}
-        className="card-noise group/card relative flex h-full min-h-[22rem] w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-deep/45 p-6 text-white backdrop-blur-sm transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
+        className="card-noise group/card relative flex h-full min-h-[22rem] w-full flex-col overflow-hidden rounded-xl border border-white/15 bg-deep/85 p-6 text-white shadow-[0_18px_40px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
       >
         {/* Hover: a brand-blue fill sweeps up from the bottom and the card content turns white. */}
         <span
@@ -71,7 +71,7 @@ function Card({
             aria-hidden="true"
             className="mt-5 block h-px bg-white/20 transition-colors duration-300 group-hover/card:bg-white/35"
           />
-          <p className="mt-4 text-sm leading-relaxed text-white/65 transition-colors duration-300 group-hover/card:text-white/85">
+          <p className="mt-4 text-sm leading-relaxed text-white/75 transition-colors duration-300 group-hover/card:text-white/85">
             {item.description}
           </p>
           <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-sky transition-colors duration-300 group-hover/card:text-white">
