@@ -19,8 +19,8 @@ type Item = {
 const GAP = 16;
 
 export function Card({ item, fluid = false }: { item: Item; fluid?: boolean }) {
-  const cls = `group relative block aspect-[6/5] overflow-hidden rounded-2xl text-white ${
-    fluid ? "w-full" : "w-[19rem] shrink-0 sm:w-[23rem]"
+  const cls = `group relative isolate block aspect-[6/5] overflow-hidden rounded-2xl text-white ${
+    fluid ? "w-full" : "w-[15rem] shrink-0 sm:w-[17.5rem]"
   }`;
   const inner = (
     <>
@@ -32,9 +32,11 @@ export function Card({ item, fluid = false }: { item: Item; fluid?: boolean }) {
         sizes="23rem"
         className="object-cover"
       />
+      {/* Light, uniform brand-blue wash: keeps each photo's own colours and detail, only evens out the overall tone. */}
+      <div className="absolute inset-0 bg-blue/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-deep/90 via-deep/25 to-deep/5" />
-      <div className="absolute inset-x-0 bottom-0 p-6">
-        <h3 className="flex items-center justify-between gap-3 text-xl font-semibold text-white">
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <h3 className="flex items-center justify-between gap-3 text-lg font-semibold text-white">
           {item.title}
           {item.href && <ArrowUpRight size={20} className="shrink-0" />}
         </h3>

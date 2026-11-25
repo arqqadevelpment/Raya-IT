@@ -13,7 +13,11 @@ const first = Math.min(...years);
 export default function AwardsPage() {
   return (
     <>
-      <PageHero title="Awards & Certifications" trail={[{ title: "Who We Are" }]} />
+      <PageHero
+        title="Awards & Certifications"
+        trail={[{ title: "Who We Are" }]}
+        video="/awards-hero.mp4"
+      />
 
       <section className="bg-white py-20 sm:py-28">
         <Container>

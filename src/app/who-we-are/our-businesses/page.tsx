@@ -10,7 +10,11 @@ export const metadata: Metadata = { title: "Our Businesses" };
 export default function OurBusinessesPage() {
   return (
     <>
-      <PageHero title="Our Businesses" trail={[{ title: "Who We Are" }]} />
+      <PageHero
+        title="Our Businesses"
+        trail={[{ title: "Who We Are" }]}
+        video="/businesses-hero.mp4"
+      />
 
       <nav aria-label="On this page" className="sticky top-[100px] z-30 border-b border-mist bg-white">
         <Container className="flex gap-6 overflow-x-auto py-3 text-sm font-medium">

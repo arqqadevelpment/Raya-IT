@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Eye, MapPin, Target } from "lucide-react";
+import { ArrowRight, Award, Building2, Eye, MapPin, Target, TrendingUp, Users } from "lucide-react";
 import FlagMark from "@/components/FlagMark";
 import PageHero from "@/components/PageHero";
 import { JourneyTimeline, RegionNetwork } from "@/components/AboutVisuals";
 import {
+  Counter,
   Reveal,
   ScrollWords,
   SplitHeading,
@@ -34,10 +35,10 @@ const mission =
   "Empower businesses through cutting-edge digital transformation innovations, that drive efficiency, excellence and sustainable growth";
 
 const facts = [
-  { to: 1000, suffix: "+", decimals: 0, label: "Customers" },
-  { to: 6, suffix: "", decimals: 0, label: "Subsidiaries" },
-  { to: 1500, suffix: "+", decimals: 0, label: "Qualified Experts" },
-  { to: 18.7, suffix: "", decimals: 1, label: "Billion EGP Turnover" },
+  { to: 1000, suffix: "+", decimals: 0, label: "Customers", Icon: Users },
+  { to: 6, suffix: "", decimals: 0, label: "Subsidiaries", Icon: Building2 },
+  { to: 1500, suffix: "+", decimals: 0, label: "Qualified Experts", Icon: Award },
+  { to: 18.7, suffix: "", decimals: 1, label: "Billion EGP Turnover", Icon: TrendingUp },
 ];
 
 const offices = [
@@ -58,7 +59,12 @@ const sections = [
 export default function AboutPage() {
   return (
     <>
-      <PageHero title="About Raya IT" trail={[{ title: "Who We Are" }]} intro={intro} />
+      <PageHero
+        title="About Raya IT"
+        trail={[{ title: "Who We Are" }]}
+        intro={intro}
+        video="/about-hero.mp4"
+      />
 
       <nav aria-label="On this page" className="sticky top-[100px] z-30 border-b border-mist bg-white">
         <Container className="flex gap-6 overflow-x-auto py-3 text-sm font-medium">
@@ -151,27 +157,27 @@ export default function AboutPage() {
             className="text-4xl font-bold leading-[1.1] tracking-tight text-navy sm:text-5xl"
           />
           <Reveal className="mt-12">
-            <dl className="grid overflow-hidden rounded-2xl border border-mist sm:grid-cols-2 lg:grid-cols-5">
-              {facts.map((f) => (
-                <div
-                  key={f.label}
-                  className="group relative flex flex-col border-b border-mist p-8 transition-colors last:border-b-0 hover:bg-surface sm:border-r lg:border-b-0"
-                >
-                  <span className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-electric transition-transform duration-500 group-hover:scale-x-100" />
-                  <dd className="order-1 text-4xl font-bold tracking-tight text-navy sm:text-5xl">
-                    {f.to.toLocaleString("en-US", { minimumFractionDigits: f.decimals ?? 0, maximumFractionDigits: f.decimals ?? 0 })}
-                    {f.suffix}
+            {/* White cards; a blue fill sweeps up on hover and the numbers count up on scroll */}
+            <dl className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+              {facts.map(({ Icon, ...f }) => (
+                <div key={f.label} className="group relative flex flex-col rounded-2xl border border-mist bg-white p-6 shadow-[0_10px_30px_-18px_rgba(0,23,128,0.35)] transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1.5 hover:border-electric/60 hover:shadow-[0_26px_44px_-14px_rgba(1,101,232,0.55),0_10px_24px_-10px_rgba(1,101,232,0.3)]">
+                  <span className="relative flex size-10 items-center justify-start text-electric transition-transform duration-500 group-hover:scale-110">
+                    <Icon size={36} strokeWidth={1.5} aria-hidden="true" />
+                  </span>
+                  <dd className="relative order-1 mt-8 text-4xl font-bold tracking-tight text-navy transition-colors duration-500">
+                    <Counter to={f.to} suffix={f.suffix} decimals={f.decimals} />
                   </dd>
-                  <dt className="order-2 mt-4 text-sm leading-snug text-ink/65">{f.label}</dt>
+                  <dt className="relative order-2 mt-3 text-sm leading-snug text-ink/65 transition-colors duration-500">{f.label}</dt>
                 </div>
               ))}
-              <div className="group relative flex flex-col p-8 transition-colors hover:bg-surface">
-                <span className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-electric transition-transform duration-500 group-hover:scale-x-100" />
-                <dd className="order-1 flex items-start gap-2 text-xl font-bold leading-snug text-navy sm:text-2xl">
-                  <MapPin size={22} className="mt-1 shrink-0 text-electric" aria-hidden="true" />
+              <div className="group relative flex flex-col rounded-2xl border border-mist bg-white p-6 shadow-[0_10px_30px_-18px_rgba(0,23,128,0.35)] transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1.5 hover:border-electric/60 hover:shadow-[0_26px_44px_-14px_rgba(1,101,232,0.55),0_10px_24px_-10px_rgba(1,101,232,0.3)]">
+                <span className="relative flex size-10 items-center justify-start text-electric transition-transform duration-500 group-hover:scale-110">
+                  <MapPin size={36} strokeWidth={1.5} aria-hidden="true" />
+                </span>
+                <dd className="relative order-1 mt-8 text-2xl font-bold leading-snug tracking-tight text-navy transition-colors duration-500">
                   Egypt, Saudi Arabia &amp; GCC
                 </dd>
-                <dt className="order-2 mt-4 text-sm leading-snug text-ink/65">Geo Coverage</dt>
+                <dt className="relative order-2 mt-3 text-sm leading-snug text-ink/65 transition-colors duration-500">Geo Coverage</dt>
               </div>
             </dl>
           </Reveal>

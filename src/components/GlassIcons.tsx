@@ -187,7 +187,7 @@ function Eye({ id }: P) {
         <path d={d} fill={`url(#sh-${id})`} />
       </g>
       <circle cx="32" cy="32" r="11.5" fill={`url(#au-${id})`} />
-      <circle cx="32" cy="32" r="5.2" fill="#0B2C8C" />
+      <circle cx="32" cy="32" r="5.2" fill="#001780" />
       <ellipse cx="28.8" cy="28.6" rx="3.2" ry="2.1" fill="#fff" fillOpacity="0.75" />
     </g>
   );

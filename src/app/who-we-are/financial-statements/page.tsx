@@ -11,7 +11,11 @@ export const metadata: Metadata = { title: "Financial Statements" };
 export default function FinancialStatementsPage() {
   return (
     <>
-      <PageHero title="Financial Statements" trail={[{ title: "Who We Are" }]} />
+      <PageHero
+        title="Financial Statements"
+        trail={[{ title: "Who We Are" }]}
+        video="/financial-hero.mp4"
+      />
 
       <section className="bg-white py-20 sm:py-28">
         <Container>

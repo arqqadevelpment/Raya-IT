@@ -203,7 +203,7 @@ export default function Header() {
       {/* Full-width bar behind the links, with a thin line along its bottom edge. */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-[100px] border-b border-white/20 bg-deep/85 backdrop-blur-md"
+        className="absolute inset-x-0 top-0 h-[100px] border-b border-white/20 bg-navy"
       />
       <div className="absolute inset-x-0 top-4 px-4 sm:px-6">
         <div className="relative mx-auto max-w-[88rem]">

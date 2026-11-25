@@ -156,6 +156,7 @@ export function Counter({
   group = true,
   decimals = 0,
   className,
+  replay = false,
 }: {
   to: number;
   suffix?: string;
@@ -163,9 +164,11 @@ export function Counter({
   /** Digits after the decimal point (e.g. 18.7). */
   decimals?: number;
   className?: string;
+  /** Count up again each time the number re-enters the viewport. */
+  replay?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
+  const inView = useInView(ref, { once: !replay, margin: "0px 0px -60px 0px" });
   const reduce = useReducedMotion();
   const [n, setN] = useState(to);
 
@@ -201,6 +204,7 @@ export function PixelReveal({
   rows = 6,
   coverClassName = "bg-deep",
   shape = "rect",
+  replay = false,
 }: {
   children: ReactNode;
   className?: string;
@@ -209,10 +213,12 @@ export function PixelReveal({
   coverClassName?: string;
   /** "triangle" splits every tile into two triangles (brand flag motif) that dissolve independently. */
   shape?: "rect" | "triangle";
+  /** Re-cover the image when it leaves the viewport so the reveal plays again on return. */
+  replay?: boolean;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  const inView = useInView(ref, { once: !replay, margin: "0px 0px -10% 0px" });
   const count = cols * rows;
 
   return (

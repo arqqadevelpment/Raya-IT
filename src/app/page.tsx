@@ -85,7 +85,7 @@ export default function Home() {
                 {discover.facts.map((f) => (
                   <div key={f.label} className="flex flex-col p-6">
                     <dd className="order-1 text-3xl font-bold tracking-tight text-navy sm:text-4xl">
-                      <Counter to={f.to} suffix={f.suffix} group={f.group} />
+                      <Counter to={f.to} suffix={f.suffix} group={f.group} replay />
                     </dd>
                     <dt className="order-2 mt-4 text-sm leading-snug text-ink/65">{f.label}</dt>
                   </div>
@@ -100,6 +100,7 @@ export default function Home() {
             shape="triangle"
             cols={4}
             rows={6}
+            replay
           >
             <Image
               src="/images/who-we-are.webp"

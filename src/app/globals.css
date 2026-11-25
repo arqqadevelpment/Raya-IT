@@ -92,7 +92,7 @@
   position: relative;
   isolation: isolate;
   color: #fff;
-  background-color: rgba(3, 10, 43, 0.15);
+  background-color: rgba(0, 10, 61, 0.15);
   box-shadow:
     0 -8px 26px -10px rgba(1, 101, 232, 0.6),
     0 10px 30px -14px rgba(137, 193, 240, 0.35);
@@ -112,7 +112,7 @@
   pointer-events: none;
 }
 .btn-glow:hover {
-  background-color: rgba(3, 10, 43, 0.3);
+  background-color: rgba(0, 10, 61, 0.3);
   box-shadow:
     0 -8px 34px -6px rgba(1, 101, 232, 0.85),
     0 12px 36px -10px rgba(137, 193, 240, 0.6);

@@ -11,7 +11,12 @@ export const metadata: Metadata = { title: "Our Partners" };
 export default function OurPartnersPage() {
   return (
     <>
-      <PageHero title="Our Partners" trail={[{ title: "Who We Are" }]} intro={partners.text} />
+      <PageHero
+        title="Our Partners"
+        trail={[{ title: "Who We Are" }]}
+        intro={partners.text}
+        video="/partners-hero.mp4"
+      />
 
       <section className="bg-white py-20 sm:py-28">
         <Container>

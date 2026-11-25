@@ -1,56 +1,19 @@
 "use client";
 
-// Solutions grid modelled on the reference "Our services" section (screen recording 0099.mp4):
-//  - 3-column grid; the heading is the first cell and the intro text + button the last cell.
-//  - Each card rises from below, tilted in 3D and dimmed, and settles flat as it scrolls into view.
+// Solutions carousel: heading + intro on top, then one horizontal row of glass cards that can be
+// moved with the arrows, by swiping, or with a trackpad (snaps card by card).
 
 import Link from "next/link";
 import { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import FlagMark from "./FlagMark";
 import { Reveal, SplitHeading } from "./motion";
 
 type Item = { title: string; description: string; href: string };
 
-function Card({
-  item,
-  index,
-  cta,
-}: {
-  item: Item;
-  index: number;
-  cta: string;
-}) {
-  const ref = useRef<HTMLLIElement>(null);
-  const reduce = useReducedMotion();
-
-  // Scroll-linked entrance: the card starts low, tilted and dim, then settles flat.
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 1", "start 0.5"] });
-  const p = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.6 });
-  const tilt = index % 2 === 0 ? 4 : -5; // alternating lean, as in the recording
-  const y = useTransform(p, [0, 1], [150, 0]);
-  const rotateX = useTransform(p, [0, 1], [32, 0]);
-  const rotateZ = useTransform(p, [0, 1], [tilt, 0]);
-  const scale = useTransform(p, [0, 1], [0.94, 1]);
-  const opacity = useTransform(p, [0, 1], [0.3, 1]);
-
+function Card({ item, cta }: { item: Item; cta: string }) {
   return (
-    <motion.li
-      ref={ref}
-      style={
-        reduce
-          ? undefined
-          : { y, rotateX, rotateZ, scale, opacity, transformPerspective: 1100 }
-      }
-      className="[transform-style:preserve-3d]"
-    >
+    <li className="w-[17rem] shrink-0 snap-start sm:w-[19rem]">
       <Link
         href={item.href}
         className="card-noise group/card relative flex h-full min-h-[22rem] w-full flex-col overflow-hidden rounded-xl border border-white/15 bg-deep/85 p-6 text-white shadow-[0_18px_40px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_-24px_rgba(1,101,232,0.65)]"
@@ -83,7 +46,7 @@ function Card({
           </span>
         </div>
       </Link>
-    </motion.li>
+    </li>
   );
 }
 
@@ -102,6 +65,14 @@ export default function SolutionsGrid({
   cardCta: string;
   items: Item[];
 }) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const move = (dir: 1 | -1) => {
+    const el = scroller.current;
+    if (!el) return;
+    const card = el.querySelector("li") as HTMLElement | null;
+    el.scrollBy({ left: dir * ((card?.offsetWidth ?? 336) + 20), behavior: "smooth" });
+  };
+
   return (
     <>
       {/* Header: tag + title on the left, intro text on the right */}
@@ -121,12 +92,36 @@ export default function SolutionsGrid({
         </Reveal>
       </div>
 
-      {/* Cards start below the title: 4 in the first row, 3 in the second */}
-      <ul className="mt-14 grid gap-5 [perspective:1100px] sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((item, i) => (
-          <Card key={item.title} item={item} index={i} cta={cardCta} />
-        ))}
-      </ul>
+      {/* One scrolling row; it bleeds to the page edges so the next card peeks in. */}
+      <div
+        ref={scroller}
+        className="-mx-5 mt-10 overflow-x-auto px-5 pb-10 pt-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden snap-x snap-mandatory scroll-px-5 sm:scroll-px-8"
+      >
+        <ul className="flex w-max gap-5">
+          {items.map((item) => (
+            <Card key={item.title} item={item} cta={cardCta} />
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={() => move(-1)}
+          aria-label="Previous solutions"
+          className="grid size-12 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:border-electric hover:bg-electric"
+        >
+          <ArrowLeft size={20} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() => move(1)}
+          aria-label="Next solutions"
+          className="grid size-12 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:border-electric hover:bg-electric"
+        >
+          <ArrowRight size={20} aria-hidden="true" />
+        </button>
+      </div>
     </>
   );
 }

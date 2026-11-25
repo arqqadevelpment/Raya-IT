@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 const SRC = "/digital-data-technology-network-connection-backgro-2026-10-03-16-57-05-utc.mp4";
 
 // Looping background video. Stays paused (first frame) for visitors who prefer reduced motion.
-export default function HeroVideo() {
+export default function HeroVideo({ src = SRC }: { src?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -27,8 +27,10 @@ export default function HeroVideo() {
         playsInline
         preload="metadata"
       >
-        <source src={SRC} type="video/mp4" />
+        <source src={src} type="video/mp4" />
       </video>
+      {/* Shifts the footage's teal-leaning blue to the brand navy hue (keeps its light/dark detail). */}
+      <div className="absolute inset-0 bg-navy mix-blend-color" />
       {/* Keeps headline and buttons legible over the footage. */}
       <div className="absolute inset-0 bg-gradient-to-b from-deep/70 via-deep/35 to-deep/80" />
     </div>

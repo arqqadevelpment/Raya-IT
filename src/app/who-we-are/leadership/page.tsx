@@ -12,7 +12,11 @@ export default function LeadershipPage() {
 
   return (
     <>
-      <PageHero title="Leadership" trail={[{ title: "Who We Are" }]} />
+      <PageHero
+        title="Leadership"
+        trail={[{ title: "Who We Are" }]}
+        video="/leadership-hero.mp4"
+      />
 
       {/* CEO */}
       <section className="bg-white py-20 sm:py-28">
